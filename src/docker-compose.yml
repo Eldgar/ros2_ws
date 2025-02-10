@@ -29,7 +29,7 @@ services:
   
   test:
     container_name: tortoisebot-ros2-test
-    image: eldgar/tortoisebot-ros2--test:latest
+    image: eldgar/tortoisebot-ros2-test:latest
     depends_on:
       - waypoints
     command: >
