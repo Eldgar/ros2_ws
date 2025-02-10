@@ -18,7 +18,7 @@ pipeline {
             steps {
                 sh '''
                 echo "Fetching logs from test container..."
-                sudo docker logs tortoisebot-ros2-test
+                sudo docker logs tortoisebot-ros2-waypoints
                 '''
             }
         }
