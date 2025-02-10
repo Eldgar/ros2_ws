@@ -16,8 +16,8 @@ using WaypointAction = tortoisebot_waypoints::action::Waypoint;
 using GoalHandleWaypoint = rclcpp_action::ClientGoalHandle<WaypointAction>;
 
 // Set the target coordinates (adjust as needed)
-const double TARGET_X = 0.35;
-const double TARGET_Y = 0.35;
+const double TARGET_X = 1.25;
+const double TARGET_Y = 1.25;
 
 class TestTortoiseBotWaypoints : public ::testing::Test {
 protected:

@@ -10,7 +10,7 @@ pipeline {
                 echo "Starting Docker Compose..."
                 sudo docker-compose -f ~/ros2_ws/src/docker-compose.yml up -d
                 echo "Waiting for ROS2 containers to initialize..."
-                sleep 200
+                sleep 85
                 '''
             }
         }
@@ -22,18 +22,6 @@ pipeline {
                 '''
             }
         }
-        // stage('Run Waypoints Test') {
-        //     steps {
-        //         sh '''
-        //         echo "Running tests inside tortoisebot-ros2-test container..."
-        //         sudo docker exec tortoisebot-ros2-test bash -c "
-        //             source /opt/ros/galactic/setup.bash &&
-        //             source install/setup.bash &&
-        //             colcon test --packages-select tortoisebot_waypoints --event-handler=console_direct+ &&
-        //             colcon test-result --all"
-        //         '''
-        //     }
-        // }
         stage('Fetch Test Logs') {
             steps {
                 sh '''
@@ -42,15 +30,15 @@ pipeline {
                 '''
             }
         }
-        // stage('Cleanup') {
-        //     steps {
-        //         sh '''
-        //         echo "Stopping and removing Docker containers..."
-        //         sudo docker-compose -f ~/ros2_ws/src/docker-compose.yml down
-        //         echo "Cleanup complete."
-        //         '''
-        //     }
-        // }
+        stage('Cleanup') {
+            steps {
+                sh '''
+                echo "Stopping and removing Docker containers..."
+                sudo docker-compose -f ~/ros2_ws/src/docker-compose.yml down
+                echo "Cleanup complete."
+                '''
+            }
+        }
     }
     triggers {
         pollSCM('H/3 * * * *') // Poll the repository every 3 minutes
