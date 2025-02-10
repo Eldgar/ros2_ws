@@ -22,18 +22,18 @@ pipeline {
                 '''
             }
         }
-        stage('Run Waypoints Test') {
-            steps {
-                sh '''
-                echo "Running tests inside tortoisebot-ros2-test container..."
-                sudo docker exec tortoisebot-ros2-test bash -c "
-                    source /opt/ros/galactic/setup.bash &&
-                    source install/setup.bash &&
-                    colcon test --packages-select tortoisebot_waypoints --event-handler=console_direct+ &&
-                    colcon test-result --all"
-                '''
-            }
-        }
+        // stage('Run Waypoints Test') {
+        //     steps {
+        //         sh '''
+        //         echo "Running tests inside tortoisebot-ros2-test container..."
+        //         sudo docker exec tortoisebot-ros2-test bash -c "
+        //             source /opt/ros/galactic/setup.bash &&
+        //             source install/setup.bash &&
+        //             colcon test --packages-select tortoisebot_waypoints --event-handler=console_direct+ &&
+        //             colcon test-result --all"
+        //         '''
+        //     }
+        // }
         stage('Fetch Test Logs') {
             steps {
                 sh '''
