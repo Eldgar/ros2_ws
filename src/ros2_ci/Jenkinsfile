@@ -42,15 +42,15 @@ pipeline {
                 '''
             }
         }
-        stage('Cleanup') {
-            steps {
-                sh '''
-                echo "Stopping and removing Docker containers..."
-                sudo docker-compose -f ~/ros2_ws/src/docker-compose.yml down
-                echo "Cleanup complete."
-                '''
-            }
-        }
+        // stage('Cleanup') {
+        //     steps {
+        //         sh '''
+        //         echo "Stopping and removing Docker containers..."
+        //         sudo docker-compose -f ~/ros2_ws/src/docker-compose.yml down
+        //         echo "Cleanup complete."
+        //         '''
+        //     }
+        // }
     }
     triggers {
         pollSCM('H/3 * * * *') // Poll the repository every 3 minutes
