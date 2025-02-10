@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<testsuite name="SimpleSkipTest-20250202033340" tests="1" time="0.000" failures="0" errors="0">
+	<testcase classname="SimpleSkipTest" name="test_skip" time="0.000">
+		<skipped type="skip" message="Skipping this test intentionally."/>
+	</testcase>
+	<system-out><![CDATA[]]></system-out>
+	<system-err><![CDATA[]]></system-err>
+</testsuite>

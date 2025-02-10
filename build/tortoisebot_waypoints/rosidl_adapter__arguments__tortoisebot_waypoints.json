@@ -1,0 +1,6 @@
+{
+  "package_name": "tortoisebot_waypoints",
+  "non_idl_tuples": [
+    "/home/user/ros2_ws/src/tortoisebot_waypoints:action/Waypoint.action"
+  ]
+}

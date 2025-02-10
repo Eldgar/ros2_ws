@@ -1,0 +1,27 @@
+// generated from rosidl_adapter/resource/action.idl.em
+// with input from tortoisebot_waypoints/action/Waypoint.action
+// generated code does not contain a copyright notice
+
+#include "geometry_msgs/msg/Point.idl"
+
+module tortoisebot_waypoints {
+  module action {
+    @verbatim (language="comment", text=
+      " Goal")
+    struct Waypoint_Goal {
+      geometry_msgs::msg::Point position;
+    };
+    struct Waypoint_Result {
+      @verbatim (language="comment", text=
+        " Result")
+      boolean success;
+    };
+    struct Waypoint_Feedback {
+      @verbatim (language="comment", text=
+        " Feedback")
+      geometry_msgs::msg::Point position;
+
+      string state;
+    };
+  };
+};

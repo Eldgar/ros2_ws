@@ -1,0 +1,4 @@
+source;share/tortoisebot_waypoints/local_setup.bash
+source;share/tortoisebot_waypoints/local_setup.dsv
+source;share/tortoisebot_waypoints/local_setup.sh
+source;share/tortoisebot_waypoints/local_setup.zsh

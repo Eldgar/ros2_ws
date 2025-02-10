@@ -1,0 +1,48 @@
+pipeline {
+    agent any
+    stages {
+        stage('Ensure Executable Permissions') {
+            steps {
+                sh '''
+                echo "Setting executable permissions on Waypoints scripts..."
+                chmod +x ~/simulation_ws/src/tortoisebot_waypoints/scripts/tortoisebot_action_server.py
+                chmod +x ~/simulation_ws/src/tortoisebot_waypoints/test/waypoints_test.py
+                echo "Executable permissions set."
+                '''
+            }
+        }
+        stage('Launch Simulation with Docker Compose') {
+            steps {
+                sh '''
+                echo "Starting Docker Compose..."
+                sudo docker-compose -f /home/user/simulation_ws/src/docker-compose.yml up -d
+                sleep 15
+                '''
+            }
+        }
+        stage('Check Gazebo Logs') {
+            steps {
+                sh '''
+                echo "Fetching logs from  test container..."
+                sudo docker logs tortoisebot-ros1-test
+                '''
+            }
+        }
+
+    }
+    triggers {
+        // Poll the repository every 3 minutes.
+        pollSCM('H/3 * * * *')
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
