@@ -37,4 +37,4 @@ services:
                source install/setup.bash &&
                colcon test --packages-select tortoisebot_waypoints --event-handler=console_direct+ && \
                colcon test-result --all && \
-               sleep 75"
+               sleep 60"
