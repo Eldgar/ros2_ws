@@ -35,4 +35,5 @@ services:
     command: >
       bash -c "source /opt/ros/galactic/setup.bash &&
                source install/setup.bash &&
-               colcon test --packages-select tortoisebot_waypoints --event-handler=console_direct+ colcon test-result --all"
+               colcon test --packages-select tortoisebot_waypoints --event-handler=console_direct+ && \
+               colcon test-result --all"
