@@ -10,7 +10,7 @@ pipeline {
                 echo "Starting Docker Compose..."
                 sudo docker-compose -f ~/ros2_ws/src/docker-compose.yml up -d
                 echo "Waiting for ROS2 containers to initialize..."
-                sleep 20
+                sleep 200
                 '''
             }
         }
