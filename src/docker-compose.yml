@@ -9,7 +9,7 @@ services:
     command: >
       bash -c "source /opt/ros/galactic/setup.bash &&
                source install/setup.bash &&
-               ros2 launch tortoisebot_gazebo gazebo.launch.py use_sim_time:=True"
+               ros2 launch tortoisebot_bringup bringup.launch.py use_sim_time:=True"
     # Set up X11 for GUI
     environment:
       - DISPLAY=:1
@@ -17,15 +17,15 @@ services:
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
 
-  slam:
-    container_name: tortoisebot-ros2-slam
-    image: eldgar/tortoisebot-ros2-docker-slam:updated
+  waypoints:
+    container_name: tortoisebot-ros2-waypoints
+    image: eldgar/tortoisebot-ros2-docker-waypoints:latest
     depends_on:
       - gazebo
     command: >
       bash -c "source /opt/ros/galactic/setup.bash &&
                source install/setup.bash &&
-               ros2 launch tortoisebot_bringup mapping.launch.py use_sim_time:=True"
+               ros2 launch tortoisebot_waypoints mapping.launch.py use_sim_time:=True"
     environment:
       - DISPLAY=:2
       - QT_X11_NO_MITSHM=1
