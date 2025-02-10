@@ -46,7 +46,7 @@ pipeline {
             steps {
                 sh '''
                 echo "Stopping and removing Docker containers..."
-                sudo docker-compose -f ~/ros2_ws/src/tortoisebot_ros2_docker/docker-compose.yml down
+                sudo docker-compose -f ~/ros2_ws/src/docker-compose.yml down
                 echo "Cleanup complete."
                 '''
             }
