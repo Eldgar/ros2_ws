@@ -5,8 +5,8 @@ pipeline {
             steps {
                 sh '''
                 echo "Setting executable permissions on Waypoints scripts..."
-                chmod +x ~/simulation_ws/src/tortoisebot_waypoints/scripts/tortoisebot_action_server.py
-                chmod +x ~/simulation_ws/src/tortoisebot_waypoints/test/waypoints_test.py
+                chmod +x ~/ros2_ws/src/tortoisebot_waypoints/scripts/tortoisebot_action_server.py
+                chmod +x ~/ros2_ws/src/tortoisebot_waypoints/test/waypoints_test.py
                 echo "Executable permissions set."
                 '''
             }
@@ -14,27 +14,59 @@ pipeline {
         stage('Launch Simulation with Docker Compose') {
             steps {
                 sh '''
+                echo "Stopping any existing containers..."
+                sudo docker-compose -f ~/ros2_ws/src/tortoisebot_ros2_docker/docker-compose.yml down || true
+
                 echo "Starting Docker Compose..."
-                sudo docker-compose -f /home/user/simulation_ws/src/docker-compose.yml up -d
-                sleep 15
+                sudo docker-compose -f ~/ros2_ws/src/tortoisebot_ros2_docker/docker-compose.yml up -d
+                echo "Waiting for ROS2 containers to initialize..."
+                sleep 20
                 '''
             }
         }
         stage('Check Gazebo Logs') {
             steps {
                 sh '''
-                echo "Fetching logs from  test container..."
-                sudo docker logs tortoisebot-ros1-test
+                echo "Fetching logs from Gazebo container..."
+                sudo docker logs tortoisebot-ros2-gazebo
                 '''
             }
         }
-
+        stage('Run Waypoints Test') {
+            steps {
+                sh '''
+                echo "Running tests inside tortoisebot-ros2-test container..."
+                sudo docker exec tortoisebot-ros2-test bash -c "
+                    source /opt/ros/galactic/setup.bash &&
+                    source install/setup.bash &&
+                    colcon test --packages-select tortoisebot_waypoints --event-handler=console_direct+ &&
+                    colcon test-result --all"
+                '''
+            }
+        }
+        stage('Fetch Test Logs') {
+            steps {
+                sh '''
+                echo "Fetching logs from test container..."
+                sudo docker logs tortoisebot-ros2-test
+                '''
+            }
+        }
+        stage('Cleanup') {
+            steps {
+                sh '''
+                echo "Stopping and removing Docker containers..."
+                sudo docker-compose -f ~/ros2_ws/src/tortoisebot_ros2_docker/docker-compose.yml down
+                echo "Cleanup complete."
+                '''
+            }
+        }
     }
     triggers {
-        // Poll the repository every 3 minutes.
-        pollSCM('H/3 * * * *')
+        pollSCM('H/3 * * * *') // Poll the repository every 3 minutes
     }
 }
+
 
 
 

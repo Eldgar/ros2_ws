@@ -25,9 +25,14 @@ services:
     command: >
       bash -c "source /opt/ros/galactic/setup.bash &&
                source install/setup.bash &&
-               ros2 launch tortoisebot_waypoints mapping.launch.py use_sim_time:=True"
-    environment:
-      - DISPLAY=:2
-      - QT_X11_NO_MITSHM=1
-    volumes:
-      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+               ros2 run tortoisebot_waypoints tortoisebot_action_server"
+  
+  test:
+    container_name: tortoisebot-ros2-test
+    image: eldgar/tortoisebot-ros2-docker-waypoints:latest
+    depends_on:
+      - waypoints
+    command: >
+      bash -c "source /opt/ros/galactic/setup.bash &&
+               source install/setup.bash &&
+               colcon test --packages-select tortoisebot_waypoints --event-handler=console_direct+ colcon test-result --all"
