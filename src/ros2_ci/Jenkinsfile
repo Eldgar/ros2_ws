@@ -1,16 +1,6 @@
 pipeline {
     agent any
     stages {
-        stage('Ensure Executable Permissions') {
-            steps {
-                sh '''
-                echo "Setting executable permissions on Waypoints scripts..."
-                chmod +x ~/ros2_ws/src/tortoisebot_waypoints/scripts/tortoisebot_action_server.py
-                chmod +x ~/ros2_ws/src/tortoisebot_waypoints/test/waypoints_test.py
-                echo "Executable permissions set."
-                '''
-            }
-        }
         stage('Launch Simulation with Docker Compose') {
             steps {
                 sh '''
